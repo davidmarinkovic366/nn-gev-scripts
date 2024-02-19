@@ -3,6 +3,8 @@ import json
 import pickle
 import argparse
 import librosa
+import time
+import threading
 
 # To combine all data in same folder, just set same path for 'train_output' and 'validation_output';
 
@@ -19,6 +21,18 @@ parser.add_argument('train_output', help='Path to output folder for generated tr
 parser.add_argument('validation_output', help='Path to output folder for generated validation data and .json file')
 
 args = parser.parse_args()
+
+animation_running: bool = False
+
+def animate():
+    """Animates dots in a separate thread."""
+    global animation_running
+    animation_chars = ".oO*."
+    while animation_running:
+        for char in animation_chars:
+            print("\rProcessing..." + char, end="")
+            time.sleep(0.2)
+            print("\r", end="")  # Back to beginning of line
 
 def generate_json(name: str, unique_set: set[str], args) -> str:
     """
@@ -130,8 +144,19 @@ for file in validation_files:
 # print(f"Unique validation: \n{validation_unique}")
 # print("=====================================================\n")
 
-print(f"\nSuccessfully generated .json TRAINING file at: \n{generate_json('tr', train_unique, args)}")
-print(f"Successfully generated .json VALIDATION file at: \n{generate_json('dt', validation_unique, args)}")
+animation_running = True
+animation_thread = threading.Thread(target=animate)
+animation_thread.start()
+
+training_output = generate_json('tr', train_unique, args)
+validation_output = generate_json('dt', validation_unique, args)
+
+animation_running = False
+animation_thread.join()
+
+print(f"\n\nSuccessfully generated .json TRAINING file at: \n{training_output}")
+print(f"Successfully generated .json VALIDATION file at: \n{validation_output}")
 print("========================================================================\n")
+
 
 print("Generating and combining audio files with binary masks is done, now you can run train.py script!")

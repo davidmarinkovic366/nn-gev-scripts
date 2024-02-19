@@ -26,14 +26,14 @@ display_tree = args.display_tree
 animation_running: bool = False
 
 def animate():
-  """Animates dots in a separate thread."""
-  global animation_running
-  animation_chars = ".oO*."
-  while animation_running:
-    for char in animation_chars:
-      print("\rProcessing..." + char, end="")
-      time.sleep(0.2)
-      print("\r", end="")  # Back to beginning of line
+    """Animates dots in a separate thread."""
+    global animation_running
+    animation_chars = ".oO*."
+    while animation_running:
+        for char in animation_chars:
+            print("\rProcessing..." + char, end="")
+            time.sleep(0.2)
+            print("\r", end="")  # Back to beginning of line
 
 def generate_tree_output_dir(source_path: str, output_path: str, current_depth: int = 1) -> bool:
     """
@@ -107,16 +107,6 @@ def generate_tree_output_dir(source_path: str, output_path: str, current_depth: 
             generate_tree_output_dir(source_path=next_source_path, output_path=next_output_path, current_depth=current_depth + 1)
 
     return True
-
-
-def list_files(start_path):
-    for root, dirs, files in os.walk(start_path):
-        level = root.replace(start_path, '').count(os.sep)
-        indent = ' ' * 4 * (level)
-        print('{}{}/'.format(indent, os.path.basename(root)))
-        sub_indent = ' ' * 4 * (level + 1)
-        for f in files:
-            print('{}{}'.format(sub_indent, f))
 
 # Create output dir if necessary:
 if not os.path.exists(args.output_path):
