@@ -2,6 +2,8 @@ import os
 import pickle
 import numpy as np
 
+# For test only, used to simulate 512 element ndarray that represent noise and desired IBM
+
 encoded_x = np.random.random(512)
 encoded_y = np.random.random(512)
 

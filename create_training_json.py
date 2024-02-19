@@ -6,8 +6,8 @@ import librosa
 
 # To combine all data in same folder, just set same path for 'train_output' and 'validation_output';
 
-# Example of script call:
 """
+Example of script call:
 python3 create_training_json.py /mnt/e/Downloads/datasets/proba/train /mnt/e/Downloads/datasets/proba/validation /mnt/e/Downloads/datasets/proba/train_output /mnt/e/Downloads/datasets/proba/validation_output
 """
 
@@ -48,7 +48,7 @@ def generate_json(name: str, unique_set: set[str], args) -> str:
         # Data dict, used to combine input .wav file, Noise IBM and Desired IBM:        
         instance_dict: dict = dict()
         
-        # Error with picke and .wav files, must be loaded this way:
+        # Error with pickle and .wav files, must be loaded this way:
         audio_data, _ = librosa.load(os.path.join(containing_path, file + ".wav"), mono=False)
         
         # Save loaded .wav file with pickle:
@@ -89,6 +89,10 @@ File structure of train_path || validation_path:
     INPUT_2.IBM_X
     
     ...
+
+NN-GEV beamformer works with single-channel signals, so when working with multi-channel audio,
+first you need to split all channels into multiple separated files.
+For that, you can use tool: separate_channels.py script;
 """
 
 # FIXME: for testing, remove in final version;
@@ -126,8 +130,8 @@ for file in validation_files:
 # print(f"Unique validation: \n{validation_unique}")
 # print("=====================================================\n")
 
-print(f"\nSucessfully generated .json TRAINING file at: \n{generate_json('tr', train_unique, args)}")
-print(f"Sucessfully generated .json VALIDATION file at: \n{generate_json('dt', validation_unique, args)}")
+print(f"\nSuccessfully generated .json TRAINING file at: \n{generate_json('tr', train_unique, args)}")
+print(f"Successfully generated .json VALIDATION file at: \n{generate_json('dt', validation_unique, args)}")
 print("========================================================================\n")
 
 print("Generating and combining audio files with binary masks is done, now you can run train.py script!")
