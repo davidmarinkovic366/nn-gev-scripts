@@ -10,7 +10,7 @@ import numpy as np
 
 """
 Example of script call: 
-`python3 tools/transform.py /mnt/e/Downloads/datasets/DATA/DATA/ /mnt/e/Downloads/datasets/DATA/NEW_GENERATED/ --noise_files /mnt/e/Downloads/datasets/DATA/NEW_GENERATED/ --desired_files /mnt/e/Downloads/datasets/DATA/NEW_GENERATED/ --depth 5`
+`python3 tools/transform.py /mnt/e/Downloads/datasets/DATA/DATA/ /mnt/e/Downloads/datasets/DATA/NEW_GENERATED/ --depth 5 --search_depth`
 `python3 tools/transform.py /mnt/e/Downloads/datasets/DATA/DATA /mnt/e/Downloads/datasets/DATA/NEW_GENARATED/ --simulate_masks`
 """
 
